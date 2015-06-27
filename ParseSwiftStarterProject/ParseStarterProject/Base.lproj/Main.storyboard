@@ -79,6 +79,10 @@
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="114" id="L28-cG-o2F"/>
                                             </constraints>
+                                            <connections>
+                                                <action selector="sliderTouchUp:" destination="wsi-AB-aIt" eventType="touchUpInside" id="BLD-w4-UPG"/>
+                                                <action selector="sliderValueChanged:" destination="wsi-AB-aIt" eventType="valueChanged" id="LQs-Gg-0x9"/>
+                                            </connections>
                                         </slider>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="LbQ-X3-nLB"/>
@@ -116,12 +120,13 @@
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
+                        <outlet property="speedLabel" destination="1dh-V5-IEh" id="I9E-GS-7hH"/>
                         <outlet property="wordLabel" destination="n4p-JW-Hin" id="5C0-xt-MxK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ns6-zV-sbV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2350" y="150"/>
+            <point key="canvasLocation" x="2352" y="197"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="GcZ-Rw-cxR">

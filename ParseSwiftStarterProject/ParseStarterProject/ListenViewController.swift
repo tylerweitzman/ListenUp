@@ -11,6 +11,7 @@ import UIKit
 class ListenViewController: UIViewController {
 
     @IBOutlet weak var wordLabel: UILabel!
+    @IBOutlet weak var speedLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -42,7 +43,14 @@ class ListenViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func sliderValueChanged(sender: UISlider) {
+        speedLabel.text = "Speed \(sender.value)x"
+    }
 
+    @IBAction func sliderTouchUp(sender: UISlider) {
+        speedLabel.text = "Speed \(sender.value)x"
+        
+    }
     /*
     // MARK: - Navigation
 

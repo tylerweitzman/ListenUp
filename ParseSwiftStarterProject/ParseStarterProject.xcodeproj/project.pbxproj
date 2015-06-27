@@ -28,6 +28,7 @@
 		920C58BB1B3F443100913692 /* ListenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920C58BA1B3F443100913692 /* ListenViewController.swift */; };
 		920C58BD1B3F4F1F00913692 /* Speech.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920C58BC1B3F4F1F00913692 /* Speech.swift */; };
 		920C58BF1B3F4F3F00913692 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 920C58BE1B3F4F3F00913692 /* AVFoundation.framework */; };
+		920C58C41B3F66FE00913692 /* StyleConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920C58C31B3F66FE00913692 /* StyleConstants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +56,7 @@
 		920C58BA1B3F443100913692 /* ListenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListenViewController.swift; sourceTree = "<group>"; };
 		920C58BC1B3F4F1F00913692 /* Speech.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Speech.swift; sourceTree = "<group>"; };
 		920C58BE1B3F4F3F00913692 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		920C58C31B3F66FE00913692 /* StyleConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleConstants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +102,7 @@
 		81BA81471A49DA1800E65899 /* ParseStarterProject */ = {
 			isa = PBXGroup;
 			children = (
+				920C58C31B3F66FE00913692 /* StyleConstants.swift */,
 				920C58B51B3F3D8F00913692 /* Views */,
 				920C58B31B3F3D7C00913692 /* Controller */,
 				920C58B21B3F3D2400913692 /* Models */,
@@ -274,6 +277,7 @@
 				920C58B01B3F3D1900913692 /* NotesTableViewController.swift in Sources */,
 				920C58BD1B3F4F1F00913692 /* Speech.swift in Sources */,
 				920C58B71B3F3D9B00913692 /* NotesCell.swift in Sources */,
+				920C58C41B3F66FE00913692 /* StyleConstants.swift in Sources */,
 				920C58B91B3F3F7800913692 /* ParseHelper.swift in Sources */,
 				920C58BB1B3F443100913692 /* ListenViewController.swift in Sources */,
 			);

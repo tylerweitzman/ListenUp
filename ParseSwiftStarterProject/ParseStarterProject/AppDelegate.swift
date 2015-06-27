@@ -30,7 +30,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Enable storing and querying data from Local Datastore. 
         // Remove this line if you don't want to use Local Datastore features or want to use cachePolicy.
         Parse.enableLocalDatastore()
-
+        UINavigationBar.appearance().barTintColor = StyleConstants.defaultBlueColor
+        UINavigationBar.appearance().tintColor = UIColor.whiteColor()
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+        UINavigationBar.appearance().translucent = false
+            UIToolbar.appearance().barTintColor = StyleConstants.defaultBlueColor
+        UIToolbar.appearance().tintColor = UIColor.whiteColor()
+        UIToolbar.appearance().translucent = false
         // ****************************************************************************
         // Uncomment this line if you want to enable Crash Reporting
         // ParseCrashReporting.enable()
