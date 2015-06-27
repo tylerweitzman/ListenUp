@@ -10,10 +10,16 @@ import UIKit
 
 class ListenViewController: UIViewController {
 
+    @IBOutlet weak var wordLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+    }
+    @IBAction func play(sender: AnyObject) {
+        var speech = Speech()
+        speech.delegate = self
+        speech.speak("Hello")
     }
     /*
     override func preferredInterfaceOrientationForPresentation() -> UIInterfaceOrientation
@@ -47,4 +53,9 @@ class ListenViewController: UIViewController {
     }
     */
 
+}
+extension ListenViewController : SpeechDelegate {
+    func wordWillBeSpoken(word: String) {
+        wordLabel.text = word
+    }
 }

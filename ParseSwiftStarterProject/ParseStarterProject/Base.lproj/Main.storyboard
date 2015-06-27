@@ -51,10 +51,10 @@
             </objects>
             <point key="canvasLocation" x="1784" y="197"/>
         </scene>
-        <!--View Controller-->
+        <!--Listen View Controller-->
         <scene sceneID="BPK-JA-RvI">
             <objects>
-                <viewController id="wsi-AB-aIt" sceneMemberID="viewController">
+                <viewController id="wsi-AB-aIt" customClass="ListenViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="KXe-BI-SMN"/>
                         <viewControllerLayoutGuide type="bottom" id="nFZ-pb-VEh"/>
@@ -73,7 +73,7 @@
                                 <rect key="frame" x="0.0" y="276" width="480" height="44"/>
                                 <items>
                                     <barButtonItem style="plain" id="GmQ-TH-lpP">
-                                        <slider key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" id="wlv-rT-1Mn">
+                                        <slider key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.5" maxValue="3" id="wlv-rT-1Mn">
                                             <rect key="frame" x="131" y="223" width="118" height="31"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <constraints>
@@ -83,7 +83,11 @@
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="LbQ-X3-nLB"/>
                                     <barButtonItem systemItem="rewind" id="L7X-Al-Pct"/>
-                                    <barButtonItem systemItem="play" id="fwn-iu-dnh"/>
+                                    <barButtonItem systemItem="play" id="fwn-iu-dnh">
+                                        <connections>
+                                            <action selector="play:" destination="wsi-AB-aIt" id="8oB-qb-thv"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem systemItem="fastForward" id="iGG-Pc-scX"/>
                                 </items>
                             </toolbar>
@@ -111,6 +115,9 @@
                     </view>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
+                    <connections>
+                        <outlet property="wordLabel" destination="n4p-JW-Hin" id="5C0-xt-MxK"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ns6-zV-sbV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
