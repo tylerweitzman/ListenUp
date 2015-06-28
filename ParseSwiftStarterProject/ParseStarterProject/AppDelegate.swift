@@ -84,17 +84,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let types = UIRemoteNotificationType.Badge | UIRemoteNotificationType.Alert | UIRemoteNotificationType.Sound
             application.registerForRemoteNotificationTypes(types)
         }
+        displayWindow()
+        return true
+    }
+    
+    func displayWindow() {
         var startViewController : UIViewController?
         let user = PFUser.currentUser()?.username
         let sb = UIStoryboard(name: "Main", bundle: nil)
         vc = (sb.instantiateViewControllerWithIdentifier("ViewController") as? UIViewController)!
         startViewController = vc
         if user==nil { // No user logged in
-            println("nil")
+            //            println("nil")
             var logInController = PFLogInViewController()
             logInController.delegate = self
+            var loginImageView = UIImageView(image: UIImage(named: "Logo_Wide.jpg"))
+            loginImageView.contentMode = UIViewContentMode.ScaleAspectFit
+            var signupImageView = UIImageView(image: UIImage(named: "Logo_Wide.jpg"))
+            signupImageView.contentMode = UIViewContentMode.ScaleAspectFit
+            logInController.logInView?.logo = loginImageView
+            logInController.signUpController?.signUpView?.logo = signupImageView
+            logInController.emailAsUsername = true
+            logInController.signUpController?.emailAsUsername = true
             logInController.signUpController?.delegate = self
-            logInController.signUpController?.fields = PFSignUpFields.Default | PFSignUpFields.Additional
+            //            logInController.signUpController?.fields = PFSignUpFields.Default | PFSignUpFields.
             //            logInController.s
             
             //            logInController.signUpController?.signUpView?.fields = PFSignUpFields.Default
@@ -113,7 +126,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         self.window?.rootViewController = startViewController
         self.window?.makeKeyAndVisible()
-        return true
     }
 
     //--------------------------------------

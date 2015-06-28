@@ -22,7 +22,8 @@ class Speech: NSObject {
     var refreshRate = false
     var wordRefreshCount = 0
     var startDate : NSDate?
-    var letterTimeRate : NSTimeInterval?
+    var letterTimeRate : Double?
+    var letterTimeRateScale : Double = 1
     var scaledRate : Float = 1.0 {
         didSet {
 //            0 -> 1
@@ -30,6 +31,7 @@ class Speech: NSObject {
 //             scaledRate = (rate + 0.5) * 2
             rate = (Float)((scaledRate-(0.2)-0.5) / 2.5)
             refreshRate = synthesizer.speaking
+            letterTimeRate = nil
 //            println("setting rate equal to \(rate)")
 //            println("yo")
         }
@@ -51,7 +53,42 @@ class Speech: NSObject {
     }
     
 //    func timePerCharacterPerWord
+    static func defaultLengthForString(string: String) -> String? {
+        var len = (Double)(count(string)) * Constants.defaultLetterTime
+        len = 64.4
+        var string = formatTime(len)
+        string = string! + " "
+//        if let str = string {}
+        return string
+        /*
+        println(len)
+        len = 64.0
+        var nsstring = NSString(format:"%2d", len)
+        if let str = nsstring as? String {
+            return str
+        } else {
+            return " "
+        }*/
+
+    }
     
+    static func formatTime(time: Double?) -> String? {
+        if let t : Double = time {
+            var intTime = (Int)(t)
+            switch t {
+                case 0...60:
+                    return String(format: "0:%02d", intTime)
+                case 60...60*60*60:
+                    let seconds = intTime % 60
+                    let minutes = (Int)(intTime / 60)
+                    return String(format: "%d:%02d", minutes, seconds)
+                default:
+                    return " "
+            }
+        } else{
+            return " "
+        }
+    }
     func speak(string: String) {
         wordRefreshCount = 0
         if let utterance = utterance {
@@ -59,8 +96,9 @@ class Speech: NSObject {
         } else {
             utterance = AVSpeechUtterance(string: string)
             utterance!.rate = rate
-            println(rate)
+//            println(rate)
             synthesizer.speakUtterance(utterance)
+            wordRefreshCount = 0
         }
     }
     
@@ -86,27 +124,27 @@ extension Speech : AVSpeechSynthesizerDelegate {
         wordRefreshCount++
         if wordRefreshCount==2 {
             startDate = NSDate()
+            letterTimeRateScale = (Double)(characterRange.length)
         } else if wordRefreshCount==3 {
-            letterTimeRate = NSDate().timeIntervalSinceDate(startDate!)
+            letterTimeRate = NSDate().timeIntervalSinceDate(startDate!) / letterTimeRateScale
+            println("\(letterTimeRate)")
 
         }
         var speechString = utterance.speechString
         
         /* Estimate time */
         
-        var punchCount = countCharacters(utterance.speechString, characters: ",.?!;")
+
         
         let remaining = speechString.substringFromIndex(advance(speechString.startIndex, characterRange.location))
-        var lenRemaining = (Double)(count(remaining))
-        var timeRemaining = lenRemaining * (Double)(letterTimeRate!) + punchCount * 0.2
-        delegate.updateTimeRemaining(timeRemaining)
+
         let range = Range(start: advance(speechString.startIndex, characterRange.location), end: advance(speechString.startIndex, characterRange.location + characterRange.length))
 //        println("\(speechString) \(characterRange.location) : \(characterRange.length)")
         let word = speechString.substringWithRange(range)
         if refreshRate {
 //            println("Refresh rate")
 //            startDate = NSDate()
-            wordRefreshCount = 0
+//            wordRefreshCount = 0
             synthesizer.stopSpeakingAtBoundary(AVSpeechBoundary.Immediate)
             self.utterance = nil
 //            self.utterance = nil
@@ -115,6 +153,15 @@ extension Speech : AVSpeechSynthesizerDelegate {
         }
         if let delegate = delegate {
             delegate.wordWillBeSpoken(word)
+            if let letterTimeRate = letterTimeRate {
+                var lenRemaining = (Double)(count(remaining))
+                var punchCount = countCharacters(remaining, characters: ",.?!;—-")
+                println(punchCount)
+                var timeRemaining = lenRemaining * (Double)(letterTimeRate) + punchCount * 0.35
+                delegate.updateTimeRemaining(timeRemaining)
+                
+            }
+            
         }
     }
     
