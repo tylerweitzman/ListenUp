@@ -19,10 +19,18 @@ class Speech: NSObject {
     var synthesizer = AVSpeechSynthesizer()
     var delegate : SpeechDelegate?
     var utterance : AVSpeechUtterance?
+    var totalString : String?
+    var estimatedLength : Double = 0
     var refreshRate = false
     var wordRefreshCount = 0
     var startDate : NSDate?
-    var letterTimeRate : Double?
+    var letterTimeRate : Double? {
+        didSet {
+            if let str = totalString {
+                estimatedLength = letterTimeRate! * (Double)(count(str))
+            }
+        }
+    }
     var letterTimeRateScale : Double = 1
     var scaledRate : Float = 1.0 {
         didSet {
@@ -90,6 +98,9 @@ class Speech: NSObject {
         }
     }
     func speak(string: String) {
+        if totalString == nil {
+            totalString = string
+        }
         wordRefreshCount = 0
         if let utterance = utterance {
             synthesizer.continueSpeaking()

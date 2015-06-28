@@ -53,13 +53,14 @@
                                 <action selector="logOut:" destination="il3-re-GUQ" id="AlJ-cL-H7A"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="camera" id="cXJ-bw-xku"/>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lgm-8i-1e4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1784" y="197"/>
+            <point key="canvasLocation" x="1603" y="85"/>
         </scene>
         <!--Listen View Controller-->
         <scene sceneID="BPK-JA-RvI">
@@ -120,10 +121,13 @@
                                     </button>
                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="JK7-Y3-9H6">
                                         <rect key="frame" x="60.5" y="35.5" width="198" height="34"/>
+                                        <connections>
+                                            <action selector="scrubValueChanged:" destination="wsi-AB-aIt" eventType="valueChanged" id="8VI-HR-qd0"/>
+                                        </connections>
                                     </slider>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4-Hour Work Week" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Rj-QO-VNK">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="4-Hour Work Week" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Rj-QO-VNK">
                                         <rect key="frame" x="91.5" y="76.5" width="137" height="19.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -238,16 +242,18 @@
                         <outlet property="controlView" destination="VPC-NO-7Ny" id="LHf-Z5-xIT"/>
                         <outlet property="endLabel" destination="lZs-uT-Wrn" id="We2-LO-F10"/>
                         <outlet property="pauseButton" destination="uG8-4C-G0w" id="ZUK-Zy-nxb"/>
+                        <outlet property="percentLabel" destination="DGS-vI-xfR" id="fM1-og-siW"/>
                         <outlet property="playButton" destination="Ceb-J4-UCM" id="RVI-79-o2y"/>
                         <outlet property="scrubSlider" destination="JK7-Y3-9H6" id="diA-Vo-WZT"/>
                         <outlet property="sliderView" destination="xlh-PG-0Uf" id="ZRM-GP-2wz"/>
                         <outlet property="speedLabel" destination="1dh-V5-IEh" id="I9E-GS-7hH"/>
+                        <outlet property="titleLabel" destination="2Rj-QO-VNK" id="vGj-am-ug3"/>
                         <outlet property="wordLabel" destination="n4p-JW-Hin" id="5C0-xt-MxK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ns6-zV-sbV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2206" y="85"/>
+            <point key="canvasLocation" x="2109" y="85"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="GcZ-Rw-cxR">

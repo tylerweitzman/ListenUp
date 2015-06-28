@@ -11,7 +11,9 @@ import MediaPlayer
 class ListenViewController: UIViewController {
 
     
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var percentLabel : UILabel!
     @IBOutlet weak var scrubSlider: UISlider!
     @IBOutlet weak var endLabel: UILabel!
     @IBOutlet weak var wordLabel: UILabel!
@@ -47,10 +49,9 @@ class ListenViewController: UIViewController {
         var infoCenter = MPNowPlayingInfoCenter.defaultCenter()
         var item = MPMediaItem()
 //        item.title = "Title"
-        if let stringTitle = note.0 {
-            
-        }
         let stringTitle = note!.0
+        titleLabel.text = stringTitle
+        
         infoCenter.nowPlayingInfo = [MPMediaItemPropertyTitle as NSObject: stringTitle as AnyObject!]
 //        commandCenter.
 //        commandCenter.playCommand.enabled = false
@@ -132,6 +133,9 @@ class ListenViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func scrubValueChanged(sender: UISlider) {
+        
+    }
     @IBAction func sliderValueChanged(sender: UISlider) {
         speedLabel.text = NSString(format: "Speed %.01fx", sender.value) as String
     }
