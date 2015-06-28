@@ -134,7 +134,7 @@ class ListenViewController: UIViewController {
     }
     
     @IBAction func scrubValueChanged(sender: UISlider) {
-        
+        percentLabel.text = String(format: "%.0f", 100*sender.value) + "%"
     }
     @IBAction func sliderValueChanged(sender: UISlider) {
         speedLabel.text = NSString(format: "Speed %.01fx", sender.value) as String
@@ -193,6 +193,8 @@ extension ListenViewController : SpeechDelegate {
     }
     
     func updateTimeRemaining(time: Double) {
-        endLabel.text = NSString(format: "%2d", (NSTimeInterval)(time)) as String
+//        endLabel.text = NSString(format: "%2d", (NSTimeInterval)(time)) as String
+        
+        endLabel.text = Speech.formatTime(time)
     }
 }

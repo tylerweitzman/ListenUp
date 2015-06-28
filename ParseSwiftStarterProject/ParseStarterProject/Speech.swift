@@ -28,6 +28,9 @@ class Speech: NSObject {
         didSet {
             if let str = totalString {
                 estimatedLength = letterTimeRate! * (Double)(count(str))
+                if let del = delegate {
+                    del.updateTimeRemaining(estimatedLength)
+                }
             }
         }
     }
