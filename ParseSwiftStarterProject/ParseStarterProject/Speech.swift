@@ -11,23 +11,30 @@ import AVFoundation
 
 protocol SpeechDelegate {
     func wordWillBeSpoken(word: String)
+    func didFinish()
 }
 
 class Speech: NSObject {
     var synthesizer = AVSpeechSynthesizer()
     var delegate : SpeechDelegate?
-//    var utterance : AVSpeechUtterance
+    var utterance : AVSpeechUtterance?
     var scaledRate : Float = 1.0 {
         didSet {
 //            0 -> 1
 //            0.5 -> 3
 //             scaledRate = (rate + 0.5) * 2
-            rate = (Float)((scaledRate-0.5) / 2.5)
+            rate = (Float)((scaledRate-(0.2)-0.5) / 2.5)
+            println("setting rate equal to \(rate)")
+//            println("yo")
         }
     }
     var rate : Float = 0.5 {
         didSet {
-            scaledRate = (Float)((rate + 0.5) * 2)
+//           let sr = (Float)((rate + 0.5) * 2)
+//           if sr != scaledRate {
+//                scaledRate = sr
+//           }
+            utterance?.rate = rate
         }
     }
     override init() {
@@ -38,9 +45,18 @@ class Speech: NSObject {
     }
     
     func speak(string: String) {
-        var utterance = AVSpeechUtterance(string: "Hello World my name is Banana")
-        utterance.rate = rate
-        synthesizer.speakUtterance(utterance)
+        if let utterance = utterance {
+            synthesizer.continueSpeaking()
+        } else {
+            utterance = AVSpeechUtterance(string: "Hello World my name is Banana")
+            utterance!.rate = rate
+            println(rate)
+            synthesizer.speakUtterance(utterance)
+        }
+    }
+    
+    func pause() {
+        synthesizer.pauseSpeakingAtBoundary(AVSpeechBoundary.Immediate)
     }
 }
 
@@ -54,4 +70,13 @@ extension Speech : AVSpeechSynthesizerDelegate {
             delegate.wordWillBeSpoken(word)
         }
     }
+    
+    func speechSynthesizer(synthesizer: AVSpeechSynthesizer!, didFinishSpeechUtterance utterance: AVSpeechUtterance!)
+    {
+        self.utterance = nil
+        if let delegate = delegate {
+            delegate.didFinish()
+        }
+    }
+
 }
