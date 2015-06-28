@@ -12,8 +12,8 @@ class ListenViewController: UIViewController {
 
     @IBOutlet weak var wordLabel: UILabel!
     @IBOutlet weak var toolbarView: UIToolbar!
-    @IBOutlet weak var pauseButton: UIBarButtonItem!
-    @IBOutlet weak var playButton: UIBarButtonItem!
+    @IBOutlet weak var pauseButton: UIButton!
+    @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var speedLabel: UILabel!
     @IBOutlet weak var sliderView: UISlider!
     var speech = Speech()
@@ -22,13 +22,14 @@ class ListenViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         sliderTouchUp(sliderView)
-        pauseButton.width = 0
+        pauseButton.enabled = false
+//        pauseButton.width = 0
         
     }
     @IBAction func play(sender: AnyObject) {
         if !pauseButton.enabled {
             speech.delegate = self
-            speech.speak("Hello world my name is Banana")
+            speech.speak("Hello world my name is Banana. Hello world my name is Banana. Hello world my name is Banana. Hello world my name is Banana. Hello world my name is Banana. Hello world my name is Banana. Hello world my name is Banana. Hello world my name is Banana.")
             pauseButton.enabled = true
             playButton.enabled = false
         } else {

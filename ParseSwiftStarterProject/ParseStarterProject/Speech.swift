@@ -18,6 +18,7 @@ class Speech: NSObject {
     var synthesizer = AVSpeechSynthesizer()
     var delegate : SpeechDelegate?
     var utterance : AVSpeechUtterance?
+    var refreshRate = false
     var scaledRate : Float = 1.0 {
         didSet {
 //            0 -> 1
@@ -48,7 +49,7 @@ class Speech: NSObject {
         if let utterance = utterance {
             synthesizer.continueSpeaking()
         } else {
-            utterance = AVSpeechUtterance(string: "Hello World my name is Banana")
+            utterance = AVSpeechUtterance(string: string)
             utterance!.rate = rate
             println(rate)
             synthesizer.speakUtterance(utterance)
