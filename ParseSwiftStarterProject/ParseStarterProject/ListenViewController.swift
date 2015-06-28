@@ -10,6 +10,7 @@ import UIKit
 
 class ListenViewController: UIViewController {
 
+    @IBOutlet weak var endLabel: UILabel!
     @IBOutlet weak var wordLabel: UILabel!
     @IBOutlet weak var toolbarView: UIToolbar!
     @IBOutlet weak var pauseButton: UIButton!
@@ -29,7 +30,7 @@ class ListenViewController: UIViewController {
     @IBAction func play(sender: AnyObject) {
         if !pauseButton.enabled {
             speech.delegate = self
-            speech.speak("Hello world my name is Banana. Hello world my name is Banana. Hello world my name is Banana. Hello world my name is Banana. Hello world my name is Banana. Hello world my name is Banana. Hello world my name is Banana. Hello world my name is Banana.")
+            speech.speak("banana banana banana banana banana")
             pauseButton.enabled = true
             playButton.enabled = false
         } else {

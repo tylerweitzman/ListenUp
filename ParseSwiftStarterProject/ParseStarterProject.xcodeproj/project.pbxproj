@@ -29,6 +29,9 @@
 		920C58BD1B3F4F1F00913692 /* Speech.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920C58BC1B3F4F1F00913692 /* Speech.swift */; };
 		920C58BF1B3F4F3F00913692 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 920C58BE1B3F4F3F00913692 /* AVFoundation.framework */; };
 		920C58C41B3F66FE00913692 /* StyleConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920C58C31B3F66FE00913692 /* StyleConstants.swift */; };
+		920C58D71B3F9BC900913692 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 920C58D41B3F9BC900913692 /* RegexKitLite.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		920C58D81B3F9BC900913692 /* SyllableCounter.m in Sources */ = {isa = PBXBuildFile; fileRef = 920C58D61B3F9BC900913692 /* SyllableCounter.m */; };
+		920C58DB1B3F9CA300913692 /* libicucore.A.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 920C58DA1B3F9CA300913692 /* libicucore.A.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +60,12 @@
 		920C58BC1B3F4F1F00913692 /* Speech.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Speech.swift; sourceTree = "<group>"; };
 		920C58BE1B3F4F3F00913692 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		920C58C31B3F66FE00913692 /* StyleConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleConstants.swift; sourceTree = "<group>"; };
+		920C58D31B3F9BC900913692 /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexKitLite.h; sourceTree = "<group>"; };
+		920C58D41B3F9BC900913692 /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite.m; sourceTree = "<group>"; };
+		920C58D51B3F9BC900913692 /* SyllableCounter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyllableCounter.h; sourceTree = "<group>"; };
+		920C58D61B3F9BC900913692 /* SyllableCounter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyllableCounter.m; sourceTree = "<group>"; };
+		920C58DA1B3F9CA300913692 /* libicucore.A.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.A.dylib; path = usr/lib/libicucore.A.dylib; sourceTree = SDKROOT; };
+		920C58DC1B3F9D8700913692 /* Bridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Bridge.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				920C58DB1B3F9CA300913692 /* libicucore.A.dylib in Frameworks */,
 				920C58BF1B3F4F3F00913692 /* AVFoundation.framework in Frameworks */,
 				920C58AE1B3F3C3900913692 /* Social.framework in Frameworks */,
 				920C58AC1B3F3C3300913692 /* Accounts.framework in Frameworks */,
@@ -127,6 +137,7 @@
 		81BA816A1A49DB5600E65899 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				920C58DA1B3F9CA300913692 /* libicucore.A.dylib */,
 				920C58BE1B3F4F3F00913692 /* AVFoundation.framework */,
 				920C58AD1B3F3C3900913692 /* Social.framework */,
 				920C58AB1B3F3C3300913692 /* Accounts.framework */,
@@ -163,6 +174,7 @@
 		920C58B21B3F3D2400913692 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				920C58C51B3F9B8C00913692 /* SyllableCounter */,
 				81BA814A1A49DA1800E65899 /* AppDelegate.swift */,
 				920C58B81B3F3F7800913692 /* ParseHelper.swift */,
 				920C58BC1B3F4F1F00913692 /* Speech.swift */,
@@ -183,6 +195,26 @@
 				920C58B61B3F3D9B00913692 /* NotesCell.swift */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		920C58C51B3F9B8C00913692 /* SyllableCounter */ = {
+			isa = PBXGroup;
+			children = (
+				920C58DC1B3F9D8700913692 /* Bridge.h */,
+				920C58D21B3F9BC900913692 /* RegexKitLite */,
+				920C58D51B3F9BC900913692 /* SyllableCounter.h */,
+				920C58D61B3F9BC900913692 /* SyllableCounter.m */,
+			);
+			name = SyllableCounter;
+			sourceTree = "<group>";
+		};
+		920C58D21B3F9BC900913692 /* RegexKitLite */ = {
+			isa = PBXGroup;
+			children = (
+				920C58D31B3F9BC900913692 /* RegexKitLite.h */,
+				920C58D41B3F9BC900913692 /* RegexKitLite.m */,
+			);
+			path = RegexKitLite;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -272,7 +304,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				920C58D71B3F9BC900913692 /* RegexKitLite.m in Sources */,
 				81BA814D1A49DA1800E65899 /* ViewController.swift in Sources */,
+				920C58D81B3F9BC900913692 /* SyllableCounter.m in Sources */,
 				81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */,
 				920C58B01B3F3D1900913692 /* NotesTableViewController.swift in Sources */,
 				920C58BD1B3F4F1F00913692 /* Speech.swift in Sources */,
@@ -387,6 +421,7 @@
 				);
 				INFOPLIST_FILE = ParseStarterProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-licucore";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "ParseStarterProject/ParseStarterProject-Bridging-Header.h";
 			};
@@ -403,6 +438,7 @@
 				);
 				INFOPLIST_FILE = ParseStarterProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-licucore";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "ParseStarterProject/ParseStarterProject-Bridging-Header.h";
 			};
