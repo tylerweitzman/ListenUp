@@ -8,6 +8,8 @@
 
 import UIKit
 import MediaPlayer
+import Parse
+import CoreLocation
 class ListenViewController: UIViewController {
 
     
@@ -17,23 +19,49 @@ class ListenViewController: UIViewController {
     @IBOutlet weak var scrubSlider: UISlider!
     @IBOutlet weak var endLabel: UILabel!
     @IBOutlet weak var wordLabel: UILabel!
+    @IBOutlet weak var startLabel: UILabel!
+    
     @IBOutlet var controlView: UIView!
     @IBOutlet weak var pauseButton: UIButton!
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var speedLabel: UILabel!
     @IBOutlet weak var sliderView: UISlider!
+    var location = CLLocationManager()
+    
     var speech = Speech()
+    var cursor : Double = 0
     var commandCenter = MPRemoteCommandCenter.sharedCommandCenter()
     var backgroundTask : UIBackgroundTaskIdentifier?
     var note : (String, String)?
+    var obj : PFObject? {
+        didSet {
+            if let cursor = obj?.objectForKey("cursor") as? Double {
+//                speech.cursor = cursor
+                speech.restartWithPercent(cursor)
+//                speech.pause()
+            }
+        }
+    }
     var saveConstraints : [AnyObject]?
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+//        scrubSlider.value = (Float)(cursor)
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
+
         self.saveConstraints = controlView.constraints()
         // Do any additional setup after loading the view.
         sliderTouchUp(sliderView)
         pauseButton.enabled = false
 //        pauseButton.width = 0
+        
+        location.requestAlwaysAuthorization()
+        location.requestWhenInUseAuthorization()
+        //        location.reque
+        //        location.delegate = self
+        location.desiredAccuracy = kCLLocationAccuracyBest
+        location.startUpdatingLocation()
         backgroundTask = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler { () -> Void in
             UIApplication.sharedApplication().endBackgroundTask(self.backgroundTask!)
             
@@ -44,12 +72,12 @@ class ListenViewController: UIViewController {
 //        commandCenter.playCommand.enabled = false
         commandCenter.pauseCommand.addTarget(self, action: Selector("play"))
         commandCenter.togglePlayPauseCommand.addTarget(self, action: Selector("play"))
-        commandCenter.skipForwardCommand.addTarget(self, action: Selector("play"))
-        commandCenter.skipBackwardCommand.addTarget(self, action: Selector("play"))
+        commandCenter.skipForwardCommand.addTarget(self, action: Selector("forwards"))
+        commandCenter.skipBackwardCommand.addTarget(self, action: Selector("backwards"))
         var infoCenter = MPNowPlayingInfoCenter.defaultCenter()
         var item = MPMediaItem()
 //        item.title = "Title"
-        let stringTitle = note!.0
+        let stringTitle = note?.0 ?? " "
         titleLabel.text = stringTitle
         
         infoCenter.nowPlayingInfo = [MPMediaItemPropertyTitle as NSObject: stringTitle as AnyObject!]
@@ -71,12 +99,22 @@ class ListenViewController: UIViewController {
         super.init(coder: aDecoder)
         
     }
+    @IBAction func backwards() {
+        speech.backwards()
+    }
+    @IBAction func forwards() {
+        speech.forwards()
+    }
+    /*
     override func willAnimateRotationToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
         if(UIInterfaceOrientationIsLandscape(toInterfaceOrientation)) {
-            controlView.addConstraint( NSLayoutConstraint(item: controlView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Bottom, multiplier: 1.0, constant: 0))
+            let heightConstraint = NSLayoutConstraint(item: controlView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 0)
+            controlView.addConstraint(heightConstraint)
+            
+            self.view.setNeedsUpdateConstraints()
 //            self.view.remove
-            self.view.setNeedsLayout()
-//            controlView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(<#format: String#>, options: <#NSLayoutFormatOptions#>, metrics: <#[NSObject : AnyObject]?#>, views: <#[NSObject : AnyObject]#>))
+//            self.view.setNeedsLayout()
+//            selcontrolView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(<#format: String#>, options: <#NSLayoutFormatOptions#>, metrics: <#[NSObject : AnyObject]?#>, views: <#[NSObject : AnyObject]#>))
         } else {
             self.view.addSubview(controlView)
             controlView.addConstraints(self.saveConstraints!)
@@ -85,12 +123,17 @@ class ListenViewController: UIViewController {
 //            self.view.setNeedsUpdateConstraints()
         }
     }
+    
+    override func shouldAutorotate() -> Bool {
+        return false
+    }*/
 
 
     @IBAction func play() {
+
         if !pauseButton.enabled {
             speech.delegate = self
-            var str = note!.1
+            var str = note?.1 ?? " "
             speech.speak(str)
             
             pauseButton.enabled = true
@@ -135,15 +178,21 @@ class ListenViewController: UIViewController {
     
     @IBAction func scrubValueChanged(sender: UISlider) {
         percentLabel.text = String(format: "%.0f", 100*sender.value) + "%"
+        speech.pause()
+//        println("pause")
     }
     @IBAction func sliderValueChanged(sender: UISlider) {
         speedLabel.text = NSString(format: "Speed %.01fx", sender.value) as String
     }
-
+    override func viewWillDisappear(animated: Bool) {
+                speech.stopSpeaking()
+    }
     @IBAction func sliderTouchUp(sender: UISlider) {
         speedLabel.text = NSString(format: "Speed %.01fx", sender.value) as String
         speech.scaledRate = sender.value
+//        speech.pause()
         endLabel.text = ".."
+        println("Changed rate")
         
     }
     /*
@@ -192,9 +241,32 @@ extension ListenViewController : SpeechDelegate {
         
     }
     
-    func updateTimeRemaining(time: Double) {
+    @IBAction func scrubberTouchUp(sender: UISlider) {
+//        speech.continueSpeaking()
+        speech.restartWithPercent((Double)(sender.value))
+    }
+    func updateTimeRemaining(time: Double, percentComplete: Double) {
 //        endLabel.text = NSString(format: "%2d", (NSTimeInterval)(time)) as String
+//        startLabel.text ?.insert(<#newElement: Character#>, atIndex: <#String.Index#>)
         
-        endLabel.text = Speech.formatTime(time)
+        let estimatedTotal = speech.estimatedLength
+        if estimatedTotal > 0 {
+            endLabel.text = Speech.formatTime(estimatedTotal)
+            endLabel.text = "~" + endLabel.text!
+            var startTime = estimatedTotal - time
+            startLabel.text = Speech.formatTime(startTime)
+            startLabel.text = "~" + startLabel.text!
+            self.scrubSlider.value = (Float)(startTime / estimatedTotal)
+            self.percentLabel.text = String(format: "%.0f", 100*scrubSlider.value) + "%"
+            obj?.setValue(scrubSlider.value, forKey: "cursor")
+            obj?.saveInBackground()
+            
+        }
+        
+        
+
+        
+
+        
     }
 }

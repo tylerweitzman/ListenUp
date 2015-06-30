@@ -12,7 +12,7 @@ import AVFoundation
 protocol SpeechDelegate {
     func wordWillBeSpoken(word: String)
     func didFinish()
-    func updateTimeRemaining (time: Double)
+    func updateTimeRemaining (time: Double, percentComplete: Double)
 }
 
 class Speech: NSObject {
@@ -22,14 +22,17 @@ class Speech: NSObject {
     var totalString : String?
     var estimatedLength : Double = 0
     var refreshRate = false
+    var cursor : Int = 0
     var wordRefreshCount = 0
     var startDate : NSDate?
     var letterTimeRate : Double? {
         didSet {
             if let str = totalString {
-                estimatedLength = letterTimeRate! * (Double)(count(str))
-                if let del = delegate {
-                    del.updateTimeRemaining(estimatedLength)
+                    if (letterTimeRate != nil) {
+                        estimatedLength = letterTimeRate! * (Double)(count(str))
+                        if let del = delegate {
+                            del.updateTimeRemaining(estimatedLength, percentComplete: 0)
+                    }
                 }
             }
         }
@@ -66,7 +69,7 @@ class Speech: NSObject {
 //    func timePerCharacterPerWord
     static func defaultLengthForString(string: String) -> String? {
         var len = (Double)(count(string)) * Constants.defaultLetterTime
-        len = 64.4
+//        len = 64.4
         var string = formatTime(len)
         string = string! + " "
 //        if let str = string {}
@@ -100,9 +103,22 @@ class Speech: NSObject {
             return " "
         }
     }
+    func updateCursor(percent: Double) {
+        if let totalString = totalString {
+            var totalLen = (Double)(count(totalString))
+            println("Percent \(percent) Total \(totalLen)")
+            var loc = (Int)(percent * totalLen)
+            cursor = loc
+        } else {
+            cursor = 0
+
+        }
+            println("Cursor \(cursor)")
+    }
     func speak(string: String) {
         if totalString == nil {
             totalString = string
+            cursor = 0
         }
         wordRefreshCount = 0
         if let utterance = utterance {
@@ -119,7 +135,62 @@ class Speech: NSObject {
     func pause() {
         synthesizer.pauseSpeakingAtBoundary(AVSpeechBoundary.Immediate)
     }
-    
+    func backwards() {
+        //15 seconds
+        if let totalString = totalString {
+            var lr = letterTimeRate
+            if lr == nil {
+                lr = Constants.defaultLetterTime
+            }
+            var wordsBack = (Int)(15.0 / (lr!))
+            var loc = self.cursor - wordsBack
+            if loc < 0 { loc = 0 }
+            if totalString.endIndex != totalString.startIndex {
+                var stringToSpeak = totalString.substringFromIndex(advance(totalString.startIndex, loc))
+                self.stopSpeaking()
+                self.speak(stringToSpeak)
+            }
+        }
+        
+    }
+    func forwards() {
+        //15 seconds
+        if let totalString = totalString {
+            var lr = letterTimeRate
+            if lr == nil {
+                lr = Constants.defaultLetterTime
+            }
+            var wordsBack = (Int)(15.0 / (lr!))
+            var loc = self.cursor + wordsBack
+            if loc > count(totalString) {
+                self.stopSpeaking()
+
+            } else {
+                var stringToSpeak = totalString.substringFromIndex(advance(totalString.startIndex, loc))
+                self.stopSpeaking()
+                self.speak(stringToSpeak)
+            }
+        }
+        
+    }
+    func continueSpeaking() {
+        synthesizer.continueSpeaking()
+    }
+    func stopSpeaking() {
+        synthesizer.stopSpeakingAtBoundary(AVSpeechBoundary.Immediate)
+        self.utterance = nil
+    }
+    func restartWithPercent(percent: Double) {
+        println("percent \(percent)")
+        if let totalString = totalString {
+            self.stopSpeaking()
+            var totalLen = (Double)(count(totalString))
+            var loc = (Int)(percent * totalLen)
+            var remaining = totalString.substringFromIndex(advance(totalString.startIndex, loc))
+            self.speak(remaining)
+        }
+
+    }
     func countCharacters(string: String, characters: String) -> Double {
         var i = 0.0
         for x in string {
@@ -141,7 +212,8 @@ extension Speech : AVSpeechSynthesizerDelegate {
             letterTimeRateScale = (Double)(characterRange.length)
         } else if wordRefreshCount==3 {
             letterTimeRate = NSDate().timeIntervalSinceDate(startDate!) / letterTimeRateScale
-            println("\(letterTimeRate)")
+            letterTimeRate = letterTimeRate! + 0.1
+            println("Time Rate: \(letterTimeRate)")
 
         }
         var speechString = utterance.speechString
@@ -156,12 +228,12 @@ extension Speech : AVSpeechSynthesizerDelegate {
 //        println("\(speechString) \(characterRange.location) : \(characterRange.length)")
         let word = speechString.substringWithRange(range)
         if refreshRate {
-//            println("Refresh rate")
+            println("Refresh rate")
 //            startDate = NSDate()
 //            wordRefreshCount = 0
-            synthesizer.stopSpeakingAtBoundary(AVSpeechBoundary.Immediate)
-            self.utterance = nil
+
 //            self.utterance = nil
+            self.stopSpeaking()
             speak(remaining)
             refreshRate = false
         }
@@ -169,10 +241,13 @@ extension Speech : AVSpeechSynthesizerDelegate {
             delegate.wordWillBeSpoken(word)
             if let letterTimeRate = letterTimeRate {
                 var lenRemaining = (Double)(count(remaining))
-                var punchCount = countCharacters(remaining, characters: ",.?!;—-")
-                println(punchCount)
-                var timeRemaining = lenRemaining * (Double)(letterTimeRate) + punchCount * 0.35
-                delegate.updateTimeRemaining(timeRemaining)
+//                var punchCount = countCharacters(remaining, characters: ",.?!;—-")
+//                println(punchCount)
+//                var timeRemaining = lenRemaining * (Double)(letterTimeRate) + punchCount * 0.35
+                var timeRemaining = lenRemaining * (Double)(letterTimeRate)
+                var percent = (estimatedLength-timeRemaining) / estimatedLength
+                delegate.updateTimeRemaining(timeRemaining, percentComplete: percent)
+                updateCursor(percent)
                 
             }
             

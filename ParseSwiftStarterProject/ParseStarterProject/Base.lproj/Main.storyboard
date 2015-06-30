@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
@@ -53,7 +54,6 @@
                                 <action selector="logOut:" destination="il3-re-GUQ" id="AlJ-cL-H7A"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="camera" id="cXJ-bw-xku"/>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
@@ -122,16 +122,18 @@
                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="JK7-Y3-9H6">
                                         <rect key="frame" x="60.5" y="35.5" width="198" height="34"/>
                                         <connections>
-                                            <action selector="scrubValueChanged:" destination="wsi-AB-aIt" eventType="valueChanged" id="8VI-HR-qd0"/>
+                                            <action selector="scrubberTouchUp:" destination="wsi-AB-aIt" eventType="touchUpOutside" id="N2D-fs-YEC"/>
+                                            <action selector="scrubberTouchUp:" destination="wsi-AB-aIt" eventType="touchUpInside" id="jCm-eM-g9A"/>
+                                            <action selector="sliderValueChanged:" destination="wsi-AB-aIt" eventType="valueChanged" id="v5G-SO-wvB"/>
                                         </connections>
                                     </slider>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="4-Hour Work Week" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Rj-QO-VNK">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4-Hour Work Week" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.15000000000000008" translatesAutoresizingMaskIntoConstraints="NO" id="2Rj-QO-VNK">
                                         <rect key="frame" x="91.5" y="76.5" width="137" height="19.5"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="~0:55" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ssz-sE-uIg">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="~0:00" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ssz-sE-uIg">
                                         <rect key="frame" x="5" y="56" width="51.5" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -158,6 +160,9 @@
                                         <state key="normal" title="Button" image="15_Forward_Icon.png">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="backwards" destination="wsi-AB-aIt" eventType="touchUpInside" id="a4H-6n-9Bt"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B0N-0F-qY9">
                                         <rect key="frame" x="204" y="96" width="20" height="20"/>
@@ -168,6 +173,9 @@
                                         <state key="normal" title="Button" image="15_Backwards_Icon.png">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="forwards" destination="wsi-AB-aIt" eventType="touchUpInside" id="DSL-er-01E"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.96820169624197416" green="0.96820169624197416" blue="0.96820169624197416" alpha="1" colorSpace="calibratedRGB"/>
@@ -185,6 +193,7 @@
                                     <constraint firstAttribute="centerX" secondItem="JK7-Y3-9H6" secondAttribute="centerX" id="Peb-U7-hoD"/>
                                     <constraint firstItem="ssz-sE-uIg" firstAttribute="leading" secondItem="cCO-DC-Qsx" secondAttribute="leading" constant="5" id="Puz-21-bSt"/>
                                     <constraint firstItem="JK7-Y3-9H6" firstAttribute="bottom" secondItem="lZs-uT-Wrn" secondAttribute="bottom" constant="-8" id="V2h-fM-E8z"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="2Rj-QO-VNK" secondAttribute="trailing" constant="83.5" id="VRz-mN-ZiO"/>
                                     <constraint firstAttribute="trailing" secondItem="mbN-zz-Lsu" secondAttribute="trailing" constant="5" id="W5K-AB-omC"/>
                                     <constraint firstAttribute="trailing" secondItem="xlh-PG-0Uf" secondAttribute="trailing" constant="20" symbolic="YES" id="WPq-MI-W5V"/>
                                     <constraint firstItem="xlh-PG-0Uf" firstAttribute="width" secondItem="1dh-V5-IEh" secondAttribute="width" multiplier="2" id="ZpS-ns-KUv"/>
@@ -197,6 +206,7 @@
                                     <constraint firstItem="2Rj-QO-VNK" firstAttribute="top" secondItem="JK7-Y3-9H6" secondAttribute="bottom" priority="500" constant="8" id="mEh-RV-9Pp"/>
                                     <constraint firstItem="JK7-Y3-9H6" firstAttribute="leading" secondItem="ssz-sE-uIg" secondAttribute="trailing" constant="6" id="rSD-Pb-Lbd"/>
                                     <constraint firstItem="1dh-V5-IEh" firstAttribute="top" secondItem="3bU-bb-eVW" secondAttribute="bottom" constant="6" id="sSZ-Sd-aD8"/>
+                                    <constraint firstItem="2Rj-QO-VNK" firstAttribute="leading" secondItem="cCO-DC-Qsx" secondAttribute="leadingMargin" constant="83.5" id="ugM-9m-auB"/>
                                     <constraint firstItem="Ceb-J4-UCM" firstAttribute="leading" secondItem="3bU-bb-eVW" secondAttribute="trailing" constant="35" id="wQa-Ww-g7A"/>
                                     <constraint firstItem="DGS-vI-xfR" firstAttribute="leading" secondItem="cCO-DC-Qsx" secondAttribute="leading" constant="5" id="xbi-0H-xGl"/>
                                     <constraint firstAttribute="bottom" secondItem="1dh-V5-IEh" secondAttribute="bottom" constant="10" id="ycP-EL-ghs"/>
@@ -247,6 +257,7 @@
                         <outlet property="scrubSlider" destination="JK7-Y3-9H6" id="diA-Vo-WZT"/>
                         <outlet property="sliderView" destination="xlh-PG-0Uf" id="ZRM-GP-2wz"/>
                         <outlet property="speedLabel" destination="1dh-V5-IEh" id="I9E-GS-7hH"/>
+                        <outlet property="startLabel" destination="ssz-sE-uIg" id="bvc-eh-l9D"/>
                         <outlet property="titleLabel" destination="2Rj-QO-VNK" id="vGj-am-ug3"/>
                         <outlet property="wordLabel" destination="n4p-JW-Hin" id="5C0-xt-MxK"/>
                     </connections>

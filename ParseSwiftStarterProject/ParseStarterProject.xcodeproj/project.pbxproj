@@ -48,6 +48,7 @@
 		926C6B341B404D5A0021FD48 /* Rewind_Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 926C6B281B404D5A0021FD48 /* Rewind_Icon.png */; };
 		926C6B351B404D5A0021FD48 /* Settings_Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 926C6B291B404D5A0021FD48 /* Settings_Icon.png */; };
 		926C6B371B4050B60021FD48 /* Pink_Player_Rectangle_Icon2.png in Resources */ = {isa = PBXBuildFile; fileRef = 926C6B361B4050B60021FD48 /* Pink_Player_Rectangle_Icon2.png */; };
+		92862FC21B406CE000917D57 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92862FC11B406CE000917D57 /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -98,6 +99,7 @@
 		926C6B281B404D5A0021FD48 /* Rewind_Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Rewind_Icon.png; sourceTree = "<group>"; };
 		926C6B291B404D5A0021FD48 /* Settings_Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Settings_Icon.png; sourceTree = "<group>"; };
 		926C6B361B4050B60021FD48 /* Pink_Player_Rectangle_Icon2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Pink_Player_Rectangle_Icon2.png; sourceTree = "<group>"; };
+		92862FC11B406CE000917D57 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +107,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				92862FC21B406CE000917D57 /* CoreLocation.framework in Frameworks */,
 				920C58DE1B3FC36D00913692 /* MediaPlayer.framework in Frameworks */,
 				920C58DB1B3F9CA300913692 /* libicucore.A.dylib in Frameworks */,
 				920C58BF1B3F4F3F00913692 /* AVFoundation.framework in Frameworks */,
@@ -185,6 +188,7 @@
 		81BA816A1A49DB5600E65899 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				92862FC11B406CE000917D57 /* CoreLocation.framework */,
 				920C58DD1B3FC36D00913692 /* MediaPlayer.framework */,
 				920C58DA1B3F9CA300913692 /* libicucore.A.dylib */,
 				920C58BE1B3F4F3F00913692 /* AVFoundation.framework */,
@@ -298,6 +302,7 @@
 				TargetAttributes = {
 					81BA81441A49DA1800E65899 = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = 883642BDYB;
 					};
 				};
 			};
@@ -479,6 +484,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -487,6 +494,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-licucore";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "ParseStarterProject/ParseStarterProject-Bridging-Header.h";
 			};
 			name = Debug;
@@ -496,6 +504,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -504,6 +514,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-licucore";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "ParseStarterProject/ParseStarterProject-Bridging-Header.h";
 			};
 			name = Release;

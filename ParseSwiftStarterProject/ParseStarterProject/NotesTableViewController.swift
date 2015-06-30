@@ -59,16 +59,46 @@ class NotesTableViewController: PFQueryTableViewController {
             var vc = segue.destinationViewController as! ListenViewController
             let indexPath = tableView.indexPathForSelectedRow()
             if let obj = self.objectAtIndexPath(indexPath) {
-                if let title = obj["title"], let content = obj["content"] {
-                    selectedNote = (title as! String, content as! String)
+                if let title = obj["title"] as? String, let content = obj["content"] as? String {
+                    selectedNote = (title, content)
                     vc.note = selectedNote
+                    vc.obj = obj
+                    if let cursor : Double = obj.objectForKey("cursor") as! Double? {
+                        //                speech.cursor = cursor
+                        vc.cursor = cursor
+                        //                speech.pause()
+                    }
                     println(selectedNote!.1)
                     
+                } else {
+                    // Casting unsuccessful
                 }
             }
 
         }
     }
+    /*
+override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+if segue.identifier == "ShowExistingNote" {
+var vc = segue.destinationViewController as! ListenViewController
+let indexPath = tableView.indexPathForSelectedRow()
+if let obj = self.objectAtIndexPath(indexPath) {
+if let title = obj["title"], let content = obj["content"] {
+selectedNote = (title as! String, content as! String)
+vc.note = selectedNote
+vc.obj = obj
+if let cursor : Double = obj.objectForKey("cursor") as! Double? {
+//                speech.cursor = cursor
+vc.cursor = cursor
+//                speech.pause()
+}
+println(selectedNote!.1)
+
+}
+}
+
+}
+}*/
 
 
 }

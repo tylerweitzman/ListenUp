@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct StyleConstants {
+class StyleConstants : NSObject {
 //   static let defaultBlueColor = UIColor(red: 41/255.0, green: 128/255.0, blue: 185/255.0, alpha: 1.0)
 //    rgb(41, 128, 185)
      static let defaultBlueColor = UIColor(red: 61/255.0, green: 168/255.0, blue: 255/255.0, alpha: 1.0)
