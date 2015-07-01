@@ -10,5 +10,5 @@
 #define ParseStarterProject_Bridge_h
 
 #import "SyllableCounter.h"
-
+#import "OBSlider.h"
 #endif
